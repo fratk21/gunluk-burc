@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gunluk_burc/model/datas.dart';
 import 'package:gunluk_burc/views/constants.dart';
+
+import '../model/list_COMPLIMENTS.dart';
 
 class DetailsView extends StatefulWidget {
   final PlanetInfo? planetInfo;
@@ -10,7 +14,16 @@ class DetailsView extends StatefulWidget {
   State<DetailsView> createState() => _DetailsViewState();
 }
 
+Random randomsayi = new Random();
+int a = randomsayi.nextInt(14);
+
 class _DetailsViewState extends State<DetailsView> {
+  @override
+  void initState() {
+    a = randomsayi.nextInt(14);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +38,7 @@ class _DetailsViewState extends State<DetailsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(
-                    height: 300,
+                    height: 200,
                   ),
                   Text(
                     widget.planetInfo!.name.toString(),
@@ -37,7 +50,7 @@ class _DetailsViewState extends State<DetailsView> {
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    "Solar System",
+                    widget.planetInfo!.position.toString(),
                     style: TextStyle(
                         fontSize: 30,
                         fontFamily: 'Avenir',
@@ -80,7 +93,7 @@ class _DetailsViewState extends State<DetailsView> {
                     height: 15,
                   ),
                   Text(
-                    "Gallery",
+                    "DATING HOROSCOPE",
                     style: TextStyle(
                         fontSize: 24,
                         overflow: TextOverflow.ellipsis,
@@ -94,26 +107,24 @@ class _DetailsViewState extends State<DetailsView> {
                     height: 15,
                   ),
                   Container(
-                    height: 250,
-                    child: ListView.builder(
+                    height: 140,
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: widget.planetInfo!.images!.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24)),
-                          child: AspectRatio(
-                              aspectRatio: 1,
-                              child: Image.network(
-                                widget.planetInfo!.images![index],
-                                fit: BoxFit.cover,
-                              )),
-                        );
-                      },
+                      scrollDirection: Axis.vertical,
+                      child: Text(
+                        widget.planetInfo!.images![0].toString(),
+                        style: TextStyle(
+                            fontSize: 20,
+                            overflow: TextOverflow.ellipsis,
+                            fontFamily: 'Avenir',
+                            color: contentTextColor,
+                            fontWeight: FontWeight.w400),
+                        textAlign: TextAlign.left,
+                        maxLines: 60,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -124,13 +135,13 @@ class _DetailsViewState extends State<DetailsView> {
                   tag: widget.planetInfo!.position,
                   child: Image.asset(widget.planetInfo!.iconImage.toString()))),
           Positioned(
-              top: 60,
-              left: 32,
+              top: 70,
+              left: 0,
               child: Text(
-                widget.planetInfo!.position.toString(),
+                compliments2[a].toString(),
                 style: TextStyle(
                     fontWeight: FontWeight.w900,
-                    fontSize: 247,
+                    fontSize: 50,
                     color: Colors.grey.withOpacity(0.2)),
               )),
           IconButton(

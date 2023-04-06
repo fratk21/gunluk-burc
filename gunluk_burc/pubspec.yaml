@@ -38,6 +38,8 @@ dependencies:
   flutter_swiper_plus: ^2.0.4
   http: ^0.13.5
   html: ^0.15.2
+  date_format: ^2.0.7
+  intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:

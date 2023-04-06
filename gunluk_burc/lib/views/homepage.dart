@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
@@ -5,6 +6,7 @@ import 'package:gunluk_burc/model/datas.dart';
 import 'package:gunluk_burc/model/web.dart';
 import 'package:gunluk_burc/views/constants.dart';
 import 'package:gunluk_burc/views/detailsview.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,12 +36,26 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print("2e23432");
     return Scaffold(
       backgroundColor: gradientEndColor,
       body: isloading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "Loading...",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w900),
+                  )
+                ],
+              ),
             )
           : Container(
               decoration: BoxDecoration(
@@ -62,6 +78,33 @@ class _HomePageState extends State<HomePage> {
                               style: TextStyle(
                                   fontFamily: 'Avenir',
                                   fontSize: 40,
+                                  color: Color(0xffffffff),
+                                  fontWeight: FontWeight.w900),
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        ),
+                        Text(
+                          formatDate(
+                                  DateTime.now(), [dd, '/', mm, '/', yyyy, ' '])
+                              .toString(),
+                          style: TextStyle(
+                              fontFamily: 'Avenir',
+                              fontSize: 30,
+                              color: Color(0xffffffff),
+                              fontWeight: FontWeight.w900),
+                          textAlign: TextAlign.left,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              DateFormat('EEEE')
+                                  .format(DateTime.now())
+                                  .toString(),
+                              style: TextStyle(
+                                  fontFamily: 'Avenir',
+                                  fontSize: 30,
                                   color: Color(0xffffffff),
                                   fontWeight: FontWeight.w900),
                               textAlign: TextAlign.left,
