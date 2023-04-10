@@ -2,11 +2,13 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:gunluk_burc/model/datas.dart';
 import 'package:gunluk_burc/model/web.dart';
 import 'package:gunluk_burc/views/constants.dart';
 import 'package:gunluk_burc/views/detailsview.dart';
 import 'package:intl/intl.dart';
+import 'package:gunluk_burc/ads_service/ads_services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,6 +18,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  BannerAd? _banner;
+
   late List<PlanetInfo>? planet;
   bool isloading = false;
   void gel() async {
@@ -30,8 +34,24 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    _createBannerAd();
     gel();
     super.initState();
+  }
+
+  void dispose() {
+    // ignore: deprecated_member_use
+
+    super.dispose();
+  }
+
+  void _createBannerAd() {
+    _banner = BannerAd(
+        size: AdSize.fullBanner,
+        adUnitId: adMobservices.bannerAdUnitId!,
+        listener: adMobservices.bannerAdListener,
+        request: const AdRequest())
+      ..load();
   }
 
   @override
@@ -230,6 +250,13 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               )),
+            ),
+      bottomNavigationBar: _banner == null
+          ? Container()
+          : Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              height: 52,
+              child: AdWidget(ad: _banner!),
             ),
     );
   }
